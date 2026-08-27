@@ -19,10 +19,12 @@ function CustomVideoPlayer({ src, poster }) {
   };
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto overflow-hidden rounded-xl shadow-2xl group border border-[#8C6D7D]/30 bg-black z-20">
+    // السر هنا: aspect-square بتعمل "مربع" متساوي الأضلاع (عريض وطويل في نفس الوقت)
+    <div className="relative w-full max-w-md sm:max-w-lg mx-auto overflow-hidden rounded-2xl shadow-2xl bg-black z-20 aspect-square">
       <video
         ref={videoRef}
-        className="w-full aspect-video object-cover bg-black cursor-pointer"
+        // object-cover بتخلي الفيديو يملى المربع ده بالكامل بدون أي مساحة سودة
+        className="w-full h-full object-cover cursor-pointer"
         poster={poster}
         controls={isPlaying}
         onClick={togglePlay}
@@ -154,11 +156,10 @@ export default function App() {
         <div className="relative z-10 mt-10 h-64 w-[310px] sm:h-80 sm:w-[420px] flex items-end justify-center">
           <div className="absolute bottom-0 h-44 w-full bg-[#dcc6ad] rounded-md shadow-inner sm:h-56"></div>
           
-          {/* التعديل هنا: تم زيادة قيمة bottom لرفع الصور للأعلى لتظهر بوضوح */}
-          <div className="absolute bottom-24 left-2 z-10 h-44 w-32 -rotate-12 bg-white p-2 shadow-polaroid sm:bottom-36 sm:left-6 sm:h-56 sm:w-40">
+          <div className="absolute bottom-28 left-4 z-10 h-44 w-32 -rotate-12 bg-white p-2 shadow-polaroid sm:bottom-36 sm:left-6 sm:h-56 sm:w-40">
             <img src="/images/photo2.jpg" className="h-full w-full object-cover" alt="Pic 1" />
           </div>
-          <div className="absolute bottom-20 right-2 z-10 h-44 w-32 rotate-12 bg-white p-2 shadow-polaroid sm:bottom-32 sm:right-6 sm:h-56 sm:w-40">
+          <div className="absolute bottom-24 right-4 z-10 h-44 w-32 rotate-12 bg-white p-2 shadow-polaroid sm:bottom-32 sm:right-6 sm:h-56 sm:w-40">
             <img src="/images/photo1.jpg" className="h-full w-full object-cover" alt="Pic 2" />
           </div>
 
@@ -184,24 +185,25 @@ export default function App() {
           style={{ backgroundImage: "url('/images/flowers-right.png')", backgroundRepeat: 'repeat-y', backgroundSize: '100% auto', backgroundPosition: 'right top' }}
         ></div>
 
-        <div className="z-10 w-[95%] sm:w-full max-w-5xl px-2">
+        <div className="z-10 w-[95%] sm:w-full px-2 max-w-4xl">
           <CustomVideoPlayer 
             src="/images/video.mp4" 
             poster="/images/poster.jpg"
           />
         </div>
 
-        <div className="z-10 mt-16 sm:mt-24 relative w-[95%] sm:w-full max-w-[800px] mx-auto drop-shadow-2xl">
+        <div className="z-10 mt-16 sm:mt-24 relative w-[95%] max-w-[700px] mx-auto flex items-center justify-center">
           <img 
             src="/images/lace paper.png" 
-            alt="Lace Paper Background" 
-            className="absolute inset-0 w-full h-full object-fill pointer-events-none z-0 rounded-md"
+            alt="Lace Paper" 
+            className="w-full h-auto drop-shadow-2xl pointer-events-none"
           />
-          <div className="relative z-10 flex flex-col items-center justify-center text-center px-[12%] py-[15%] sm:pt-[26%] sm:pb-[27%] sm:pl-[28%] sm:pr-[31%]">
-            <p className="font-letter text-lg sm:text-2xl lg:text-3xl font-bold text-[#4a362f] mb-3 sm:mb-5">
+          
+          <div className="absolute w-[60%] sm:w-[55%] flex flex-col items-center justify-center text-center">
+            <p className="font-letter text-[14px] sm:text-2xl lg:text-3xl font-bold text-[#4a362f] mb-2 sm:mb-4">
               To my favorite person,
             </p>
-            <p className="font-letter text-[13px] sm:text-[14px] lg:text-[16px] leading-[1.9] sm:leading-[2.1] font-bold text-[#4a362f]">
+            <p className="font-letter text-[9px] sm:text-[14px] lg:text-[16px] leading-[1.6] sm:leading-[1.9] lg:leading-[2.2] font-bold text-[#4a362f]">
               Happy birthday to the most precious person to my heart, my beautiful Soso! 🤍
               Thank you for all the happiness, comfort, and laughter you’ve brought into my life. 
               Having you by my side is truly one of the most beautiful things in my life, 
