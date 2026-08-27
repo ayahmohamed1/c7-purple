@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // ================= 1. CUSTOM VIDEO PLAYER =================
-function CustomVideoPlayer({ src, poster, aspect = "aspect-video" }) {
+function CustomVideoPlayer({ src, poster }) {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -19,11 +19,10 @@ function CustomVideoPlayer({ src, poster, aspect = "aspect-video" }) {
   };
 
   return (
-    <div className="relative w-full overflow-hidden rounded-xl shadow-2xl group border border-[#8C6D7D]/30 bg-black z-20">
+    <div className="relative w-full max-w-4xl mx-auto overflow-hidden rounded-xl shadow-2xl group border border-[#8C6D7D]/30 bg-black z-20">
       <video
         ref={videoRef}
-        // التعديل هنا: object-cover هتملا الفريم العريض بالكامل ومفيش فراغات سودة
-        className={`${aspect} w-full object-cover bg-black cursor-pointer`}
+        className="w-full aspect-video object-cover bg-black cursor-pointer"
         poster={poster}
         controls={isPlaying}
         onClick={togglePlay}
@@ -44,7 +43,7 @@ function CustomVideoPlayer({ src, poster, aspect = "aspect-video" }) {
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.3 }}
             onClick={togglePlay}
-            className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-[2px] cursor-pointer z-20"
+            className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[2px] cursor-pointer z-20"
           >
             <motion.button
               whileHover={{ scale: 1.1 }}
@@ -99,46 +98,28 @@ export default function App() {
             <motion.p
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-2 sm:mb-6 -rotate-6 font-hand text-3xl sm:text-4xl text-[#f3e3ce] relative right-12 sm:right-16 drop-shadow-md"
+              className="mb-10 sm:mb-12 -rotate-6 font-hand text-3xl sm:text-4xl text-[#f3e3ce] relative right-12 sm:right-16 drop-shadow-md z-30"
             >
               open me!
             </motion.p>
 
             <div 
-              className="relative flex items-center justify-center w-full max-w-sm cursor-pointer"
+              className="relative flex items-center justify-center w-full max-w-sm cursor-pointer mt-6"
               onClick={() => setIsEnvelopeOpened(true)}
             >
-              <motion.div
-                className="absolute z-10 h-36 w-24 sm:h-48 sm:w-32 -rotate-12 bg-white p-1.5 shadow-polaroid"
-                initial={{ y: 0, opacity: 0 }}
-                animate={isEnvelopeOpened ? { y: -120, x: -30, opacity: 1 } : { y: 0, opacity: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <img src="/images/photo2.jpg" className="h-full w-full object-cover" alt="Memory" />
-              </motion.div>
-              
-              <motion.div
-                className="absolute z-10 h-36 w-24 sm:h-48 sm:w-32 rotate-6 bg-white p-1.5 shadow-polaroid"
-                initial={{ y: 0, opacity: 0 }}
-                animate={isEnvelopeOpened ? { y: -100, x: 30, opacity: 1 } : { y: 0, opacity: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                onAnimationComplete={() => {
-                  if (isEnvelopeOpened) {
-                    setTimeout(() => {
-                      setShowMain(true);
-                    }, 1000); 
-                  }
-                }}
-              >
-                <img src="/images/photo1.jpg" className="h-full w-full object-cover" alt="Memory" />
-              </motion.div>
-
               <motion.img 
                 src="/images/envelope-closed.png"
                 alt="Closed Envelope"
-                className="relative z-20 w-64 sm:w-80 object-contain drop-shadow-2xl -rotate-6"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="relative z-20 w-72 sm:w-80 object-contain drop-shadow-2xl"
+                animate={isEnvelopeOpened ? { scale: 1.5, opacity: 0 } : { scale: 1, opacity: 1, rotate: -6 }}
+                transition={{ duration: 0.8 }}
+                onAnimationComplete={() => {
+                  if (isEnvelopeOpened) {
+                    setShowMain(true);
+                  }
+                }}
+                whileHover={!isEnvelopeOpened ? { scale: 1.05 } : {}}
+                whileTap={!isEnvelopeOpened ? { scale: 0.95 } : {}}
               />
             </div>
           </motion.section>
@@ -168,25 +149,26 @@ export default function App() {
           Happy birthday, love
         </p>
 
-        <p className="z-10 mt-5 mb-2 font-sans text-[13px] text-white/90 tracking-wide sm:text-sm">
-          
-        </p>
+        <p className="z-10 mt-5 mb-2 font-sans text-[13px] text-white/90 tracking-wide sm:text-sm"></p>
 
         <div className="relative z-10 mt-10 h-64 w-[310px] sm:h-80 sm:w-[420px] flex items-end justify-center">
           <div className="absolute bottom-0 h-44 w-full bg-[#dcc6ad] rounded-md shadow-inner sm:h-56"></div>
-          <div className="absolute bottom-16 left-2 z-10 h-44 w-32 -rotate-12 bg-white p-2 shadow-polaroid sm:bottom-24 sm:left-6 sm:h-56 sm:w-40">
+          
+          {/* التعديل هنا: تم زيادة قيمة bottom لرفع الصور للأعلى لتظهر بوضوح */}
+          <div className="absolute bottom-24 left-2 z-10 h-44 w-32 -rotate-12 bg-white p-2 shadow-polaroid sm:bottom-36 sm:left-6 sm:h-56 sm:w-40">
             <img src="/images/photo2.jpg" className="h-full w-full object-cover" alt="Pic 1" />
           </div>
-          <div className="absolute bottom-12 right-2 z-10 h-44 w-32 rotate-12 bg-white p-2 shadow-polaroid sm:bottom-20 sm:right-6 sm:h-56 sm:w-40">
+          <div className="absolute bottom-20 right-2 z-10 h-44 w-32 rotate-12 bg-white p-2 shadow-polaroid sm:bottom-32 sm:right-6 sm:h-56 sm:w-40">
             <img src="/images/photo1.jpg" className="h-full w-full object-cover" alt="Pic 2" />
           </div>
+
           <div 
             className="relative z-20 h-32 w-full bg-[#f3e3ce] shadow-[-2px_-4px_12px_rgba(0,0,0,0.08)] rounded-b-md sm:h-40"
             style={{ clipPath: 'polygon(0 0, 50% 15%, 100% 0, 100% 100%, 0 100%)' }}
           ></div>
         </div>
 
-        <div className="z-10 mt-14 mb-8 rounded-full bg-[#58323E] px-14 py-3.5 font-serif text-sm uppercase tracking-[0.3em] text-[#f3e3ce] shadow-xl hover:scale-105 transition-transform cursor-pointer border border-[#f3e3ce]/20">
+        <div className="z-10 mt-16 mb-8 rounded-full bg-[#58323E] px-14 py-3.5 font-serif text-sm uppercase tracking-[0.3em] text-[#f3e3ce] shadow-xl hover:scale-105 transition-transform cursor-pointer border border-[#f3e3ce]/20">
           I love u
         </div>
       </section>
@@ -202,37 +184,34 @@ export default function App() {
           style={{ backgroundImage: "url('/images/flowers-right.png')", backgroundRepeat: 'repeat-y', backgroundSize: '100% auto', backgroundPosition: 'right top' }}
         ></div>
 
-        <div className="z-10 w-[95%] sm:w-full max-w-4xl px-2 sm:px-24 md:px-44">
+        <div className="z-10 w-[95%] sm:w-full max-w-5xl px-2">
           <CustomVideoPlayer 
             src="/images/video.mp4" 
             poster="/images/poster.jpg"
-            aspect="aspect-video"
           />
         </div>
 
-        {/* التعديل هنا: خلينا الورقة تتمدد وتكبر بحسب النص اللي جواها */}
-        <div 
-          className="z-10 mt-16 sm:mt-20 relative w-[90%] max-w-[700px] mx-auto drop-shadow-2xl flex flex-col items-center justify-center text-center py-14 px-8 sm:py-24 sm:px-16"
-          style={{
-            backgroundImage: "url('/images/lace paper.png')",
-            backgroundSize: '100% 100%',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        >
-          <p className="font-letter text-xl sm:text-3xl font-bold text-[#4a362f] mb-4 sm:mb-6">
-            To my favorite person,
-          </p>
-          <p className="font-letter text-[13px] sm:text-[17px] leading-[1.8] sm:leading-[2] font-bold text-[#4a362f]">
-            Happy birthday to the most precious person to my heart, my beautiful Soso! 🤍
-            Thank you for all the happiness, comfort, and laughter you’ve brought into my life. 
-            Having you by my side is truly one of the most beautiful things in my life, 
-            and I’m grateful for you every single day. For 13 years, you’ve been my sister,
-            my best friend, and the person I can tell all my secrets to.
-            No one has ever been loved by me the way you are, and no one ever will.
-            I love you so much, my sister. 🤍
-            And now… you’re not a little chick anymore. You’ve officially become a chicken!
-          </p>
+        <div className="z-10 mt-16 sm:mt-24 relative w-[95%] sm:w-full max-w-[800px] mx-auto drop-shadow-2xl">
+          <img 
+            src="/images/lace paper.png" 
+            alt="Lace Paper Background" 
+            className="absolute inset-0 w-full h-full object-fill pointer-events-none z-0 rounded-md"
+          />
+          <div className="relative z-10 flex flex-col items-center justify-center text-center px-[12%] py-[15%] sm:pt-[26%] sm:pb-[27%] sm:pl-[28%] sm:pr-[31%]">
+            <p className="font-letter text-lg sm:text-2xl lg:text-3xl font-bold text-[#4a362f] mb-3 sm:mb-5">
+              To my favorite person,
+            </p>
+            <p className="font-letter text-[13px] sm:text-[14px] lg:text-[16px] leading-[1.9] sm:leading-[2.1] font-bold text-[#4a362f]">
+              Happy birthday to the most precious person to my heart, my beautiful Soso! 🤍
+              Thank you for all the happiness, comfort, and laughter you’ve brought into my life. 
+              Having you by my side is truly one of the most beautiful things in my life, 
+              and I’m grateful for you every single day. For 13 years, you’ve been my sister,
+              my best friend, and the person I can tell all my secrets to.
+              No one has ever been loved by me the way you are, and no one ever will.
+              I love you so much, my sister. 🤍
+              And now… you’re not a little chick anymore. You’ve officially become a chicken!
+            </p>
+          </div>
         </div>
       </section>
 
@@ -266,7 +245,6 @@ export default function App() {
             className="absolute top-[32%] left-0 w-full text-center z-30 pointer-events-none"
           >
             <p className="font-sans text-[13px] sm:text-[18px] text-white font-semibold tracking-wide drop-shadow-lg px-2">
-            
             </p>
           </motion.div>
 
