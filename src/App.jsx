@@ -167,7 +167,7 @@ export default function App() {
           ></div>
         </div>
 
-        <div className="z-10 mt-16 mb-8 rounded-full bg-[#58323E] px-14 py-3.5 font-serif text-sm uppercase tracking-[0.3em] text-[#f3e3ce] shadow-xl hover:scale-105 transition-transform cursor-pointer border border-[#f3e3ce]/20">
+        <div className="z-10 mt-14 mb-8 rounded-full bg-[#58323E] px-14 py-3.5 font-serif text-sm uppercase tracking-[0.3em] text-[#f3e3ce] shadow-xl hover:scale-105 transition-transform cursor-pointer border border-[#f3e3ce]/20">
           I love u
         </div>
       </section>
@@ -190,21 +190,19 @@ export default function App() {
           />
         </div>
 
-        {/* التعديل الجذري: الورقة أصبحت خلفية مطاطية تتسع للنص، مع هوامش أمان ضخمة لا يمكن اختراقها */}
-        <div 
-          className="z-10 mt-16 sm:mt-24 relative w-[95%] sm:w-[85%] max-w-[700px] mx-auto drop-shadow-2xl flex flex-col items-center justify-center text-center"
-          style={{
-            backgroundImage: "url('/images/lace paper.png')",
-            backgroundSize: '130% 110%',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        >
-          <div className="w-full pt-[24%] pb-[28%] px-[18%] sm:pt-[22%] sm:pb-[26%] sm:px-[22%]">
-            <p className="font-letter text-[16px] sm:text-2xl lg:text-3xl font-bold text-[#4a362f] mb-3 sm:mb-5">
+        {/* الحل الحاسم: استخدام عنصر img حقيقي ليفرض المقاس، والنص فوقه بـ absolute وتوسيع الأمان */}
+        <div className="z-10 mt-16 sm:mt-24 relative w-[95%] sm:w-[85%] max-w-[700px] mx-auto drop-shadow-2xl flex items-center justify-center">
+          <img 
+            src="/images/lace paper.png" 
+            alt="Lace Paper" 
+            className="w-full h-auto block pointer-events-none"
+          />
+          
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-[18%] sm:px-[22%]">
+            <p className="font-letter text-[15px] sm:text-2xl lg:text-3xl font-bold text-[#4a362f] mb-2 sm:mb-4">
               To my favorite person,
             </p>
-            <p className="font-letter text-[11.5px] sm:text-[15px] lg:text-[17px] leading-[1.9] sm:leading-[2.2] font-bold text-[#4a362f]">
+            <p className="font-letter text-[10.5px] sm:text-[14px] lg:text-[16px] leading-[1.7] sm:leading-[2] font-bold text-[#4a362f]">
               Happy birthday to the most precious person to my heart, my beautiful Soso! 🤍
               Thank you for all the happiness, comfort, and laughter you’ve brought into my life. 
               Having you by my side is truly one of the most beautiful things in my life, 
