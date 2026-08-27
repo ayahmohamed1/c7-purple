@@ -195,10 +195,10 @@ export default function App() {
           className="z-10 mt-16 sm:mt-24 relative w-[95%] sm:w-[85%] max-w-[700px] mx-auto drop-shadow-2xl flex flex-col items-center justify-center text-center"
           style={{
             backgroundImage: "url('/images/lace paper.png')",
-            backgroundSize: '140% 100%',
+            backgroundSize: '150% 100%',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            height:'1000px'
+            height:'800px'
           }}
         >
           <div className="w-full pt-[24%] pb-[28%] px-[18%] sm:pt-[22%] sm:pb-[26%] sm:px-[22%]">
