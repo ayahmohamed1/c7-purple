@@ -22,7 +22,8 @@ function CustomVideoPlayer({ src, poster, aspect = "aspect-video" }) {
     <div className="relative w-full overflow-hidden rounded-xl shadow-2xl group border border-[#8C6D7D]/30 bg-black z-20">
       <video
         ref={videoRef}
-        className={`${aspect} w-full object-contain bg-black cursor-pointer`}
+        // التعديل هنا: object-cover هتملا الفريم العريض بالكامل ومفيش فراغات سودة
+        className={`${aspect} w-full object-cover bg-black cursor-pointer`}
         poster={poster}
         controls={isPlaying}
         onClick={togglePlay}
@@ -70,7 +71,6 @@ export default function App() {
   const [isEnvelopeOpened, setIsEnvelopeOpened] = useState(false);
   const [showMain, setShowMain] = useState(false);
 
-  // هنا فصلنا قيمة الدوران (rotate) عشان نديها لـ Framer motion مباشرة
   const PHOTOS = [
     { id: 1, src: '/images/photo3.jpg', classes: 'absolute top-[16%] left-[4%] sm:left-[8%] w-[45%] sm:w-[32%]', rotate: -8 },
     { id: 2, src: '/images/photo4.jpg', classes: 'absolute top-[6%] right-[3%] sm:right-[6%] w-[43%] sm:w-[30%]', rotate: 11 },
@@ -85,7 +85,6 @@ export default function App() {
   };
 
   return (
-    // توحيد لون الخلفية الجديد #8c657a على مستوى الموقع بالكامل
     <div className={`w-full bg-[#8c657a] text-white ${showMain ? 'overflow-y-auto' : 'h-screen overflow-hidden'}`}>
       
       {/* ================= SECTION 1: THE ENVELOPE ================= */}
@@ -193,7 +192,7 @@ export default function App() {
       </section>
 
       {/* ================= SECTION 3: VIDEO & LETTER ================= */}
-      <section className="relative flex min-h-screen flex-col items-center justify-center py-20 px-4 overflow-hidden">
+      <section className="relative flex min-h-screen flex-col items-center justify-start sm:justify-center py-20 px-4 overflow-hidden">
         <div 
           className="absolute left-0 top-0 h-full w-20 sm:w-36 pointer-events-none z-0 opacity-95"
           style={{ backgroundImage: "url('/images/flowers-left.png')", backgroundRepeat: 'repeat-y', backgroundSize: '100% auto', backgroundPosition: 'left top' }}
@@ -203,7 +202,7 @@ export default function App() {
           style={{ backgroundImage: "url('/images/flowers-right.png')", backgroundRepeat: 'repeat-y', backgroundSize: '100% auto', backgroundPosition: 'right top' }}
         ></div>
 
-        <div className="z-10 w-full px-8 sm:px-24 md:px-44">
+        <div className="z-10 w-[95%] sm:w-full max-w-4xl px-2 sm:px-24 md:px-44">
           <CustomVideoPlayer 
             src="/images/video.mp4" 
             poster="/images/poster.jpg"
@@ -211,33 +210,33 @@ export default function App() {
           />
         </div>
 
-        <div className="z-10 mt-20 relative w-[90%] max-w-[800px] mx-auto drop-shadow-2xl">
-          <img 
-            src="/images/lace paper.png" 
-            alt="Lace Paper" 
-            className="w-full h-auto block pointer-events-none rounded-sm"
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-[43%] h-[72%] flex flex-col justify-center text-center">
-              <p className="font-letter text-lg sm:text-2xl md:text-3xl font-bold text-[#4a362f] mb-3 sm:mb-6">
-                To my favorite person,
-              </p>
-              <p className="font-letter text-[11.5px] sm:text-base md:text-[17px] leading-relaxed sm:leading-[1.9] font-bold text-[#4a362f] mb-3 sm:mb-6">
-                Happy birthday to the most precious person to my heart, my beautiful Soso! 🤍
-                Thank you for all the happiness, comfort, and laughter you’ve brought into my life. 
-                Having you by my side is truly one of the most beautiful things in my life, 
-                and I’m grateful for you every single day.For 13 years, you’ve been my sister,
-                 my best friend, and the person I can tell all my secrets to.
-                 No one has ever been loved by me the way you are, and no one ever will.
-                I love you so much, my sister. 🤍
-                And now… you’re not a little chick anymore. You’ve officially become a chicken!
-              </p>
-            </div>
-          </div>
+        {/* التعديل هنا: خلينا الورقة تتمدد وتكبر بحسب النص اللي جواها */}
+        <div 
+          className="z-10 mt-16 sm:mt-20 relative w-[90%] max-w-[700px] mx-auto drop-shadow-2xl flex flex-col items-center justify-center text-center py-14 px-8 sm:py-24 sm:px-16"
+          style={{
+            backgroundImage: "url('/images/lace paper.png')",
+            backgroundSize: '100% 100%',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          <p className="font-letter text-xl sm:text-3xl font-bold text-[#4a362f] mb-4 sm:mb-6">
+            To my favorite person,
+          </p>
+          <p className="font-letter text-[13px] sm:text-[17px] leading-[1.8] sm:leading-[2] font-bold text-[#4a362f]">
+            Happy birthday to the most precious person to my heart, my beautiful Soso! 🤍
+            Thank you for all the happiness, comfort, and laughter you’ve brought into my life. 
+            Having you by my side is truly one of the most beautiful things in my life, 
+            and I’m grateful for you every single day. For 13 years, you’ve been my sister,
+            my best friend, and the person I can tell all my secrets to.
+            No one has ever been loved by me the way you are, and no one ever will.
+            I love you so much, my sister. 🤍
+            And now… you’re not a little chick anymore. You’ve officially become a chicken!
+          </p>
         </div>
       </section>
 
-      {/* ================= SECTION 4: PHOTO COLLAGE (THE 6 PHOTOS) ================= */}
+      {/* ================= SECTION 4: PHOTO COLLAGE ================= */}
       <section className="relative w-full overflow-hidden px-4 py-10 sm:px-10 min-h-screen">
         
         <div 
@@ -271,7 +270,6 @@ export default function App() {
             </p>
           </motion.div>
 
-          {/* استخدام زوايا Framer Motion لتجنب تعارض الـ Tailwind */}
           {PHOTOS.map((photo, i) => (
             <motion.div
               key={photo.id}
